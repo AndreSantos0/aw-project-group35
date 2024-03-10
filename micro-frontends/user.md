@@ -14,7 +14,7 @@
 
 ## Considered Options
 
-1. ???
+* User authentication and account details as a single micro-frontend.
 
 ## Decision Outcome
 
@@ -27,10 +27,7 @@ We decided to consider all user specific actions (Registration, Authentication a
     Allows teams to be assigned to specific backend actions' implementation (separation of concerns). 
     Brings the possibility of a reusable authentication and registration page for other systems or applications. 
     This micro-frontend is independent since its only responsibility is the management of user sessions and user account details which also promotes simplicity. 
-    Allows the possibility of data storage separation (users´ data can be stored server-side while products and statisitics information data can be obtained in an external way).
+    Allows the possibility of data storage separation (users´ data can be stored server-side while products and statisitics information data can be obtained from outside).
 
-* Bad: User session information may need to be shared between micro-frontends (eg: storage of user favourite products).
-
-## More Information
-
-* ???
+* Bad: 
+    User session information may need to be shared between micro-frontends (eg: storage of user favourite products).

@@ -7,7 +7,7 @@
 
 ## Decision Drivers
 
-* Define independent and single-responsibility micro-frontends that alllow for individual deployment.
+* Define independent and single-responsibility micro-frontends that allow for individual deployment.
 * Ensure the ability to develop and maintain micro-frontends without affecting others.
 * A micro-frontend should be reusable.
 * Ensure the company can create and maintain a large-scale web application with greater flexibility and efficiency.
@@ -32,5 +32,5 @@ We decided to consider news and statistics as a unique micro-frontend that can b
 
 * Bad: 
     Information gathering of updated news and statistics can be complex.
-    Dependence of external services.
+    Dependence of external services (eg: statistics and news provider).
     

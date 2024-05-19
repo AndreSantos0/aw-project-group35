@@ -1,3 +1,3 @@
 # aw-project-group35
 
-Current delivery state - Frontend
+Current delivery state - Frontend & Backend Blueprints

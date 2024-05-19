@@ -106,22 +106,14 @@ components:
         supermarket_id:
           type: "number"
           description: "Supermarket's unique identifier"
+        category_id:
+          type: "number"
+          description: "Category's unique identifier"
         catalog_products:
           type: "array"
           items:
             type: "number"
             description: "Catalog Product's unique identifiers"
-    Supermarket_categories:
-      type: "object"
-      properties:
-        supermarket_id:
-          type: "number"
-          description: "Supermarket's unique identifier"
-        supermarket_categories:
-          type: "array"
-          items:
-            type: "number"
-            description: "Supermarket product's categories unique identifiers"
     Rating:
       type: "object"
       properties:
@@ -131,7 +123,7 @@ components:
         product_id:
           type: "number"
           description: "Product's unique identifier"
-        number_of_starts:
+        number_of_stars:
           type: "number"
     QRScan:
       type: "object"
@@ -388,6 +380,11 @@ paths:
       tags:
         - "Supermarket Service"
       summary: "Create new supermarket"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supermarket'
       responses:
         "201":
           description: "Successfully created supermarket"
@@ -588,13 +585,14 @@ paths:
                 $ref: '#/components/schemas/Saved_products'
         "404":
           description: "Profile's or Product's id not found"
-  /supermarkets/{supermarket_id}/products:
+  /supermarkets/{supermarket_id}/categories/{category_id}/products:
     get:
       tags:
         - "Supermarket Catalog Service"
       summary: "Search supermarket's products by supermarket id"
       parameters:
         - $ref: "#/components/parameters/supermarket_id"
+        - $ref: "#/components/parameters/category_id"
       responses:
         "200":
           description: "Successfully found supermarket's products by supermarket id"
@@ -603,13 +601,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Supermarket_catalogs'
         "404":
-          description: "Supermarket's id not found"
+          description: "Supermarket' or Category's not found"
     put:
       tags:
         - "Supermarket Catalog Service"
       summary: "Add new product to supermarket"
       parameters:
         - $ref: "#/components/parameters/supermarket_id"
+        - $ref: "#/components/parameters/category_id"
       requestBody:
         content:
           application/json:
@@ -622,61 +621,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Supermarket_catalogs'
-  /supermarkets/{supermarket_id}/products/{product_id}  :
-    delete:
-      tags:
-        - "Supermarket Catalog Service"
-      summary: "Remove product from supermarket"
-      parameters:
-        - $ref: "#/components/parameters/supermarket_id"
-        - $ref: "#/components/parameters/product_id"
-      responses:
-        "200":
-          description: "Successfully deleted product from supermarket"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Supermarket_catalogs'
         "404":
-          description: "Supermarket's or Product's id not found"
-  /supermarkets/{supermarket_id}/categories:
-    get:
-      tags:
-        - "Supermarket Categories Service"
-      summary: "Search supermarket's categories by supermarket id"
-      parameters:
-        - $ref: "#/components/parameters/supermarket_id"
-      responses:
-        "200":
-          description: "Successfully found supermarket's categories by supermarket id"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Supermarket_categories'
-        "404":
-          description: "Supermarket's id not found"
-    put:
-      tags:
-        - "Supermarket Categories Service"
-      summary: "Add new category to supermarket"
-      parameters:
-        - $ref: "#/components/parameters/supermarket_id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Supermarket_categories'
-      responses:
-        "200":
-          description: "Successfully created category"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Supermarket_categories'
+          description: "Supermarket' or Category's not found"
   /supermarkets/{supermarket_id}/categories/{category_id}:
     delete:
       tags:
-        - "Supermarket Categories Service"
+        - "Supermarket Catalog Service"
       summary: "Remove category from supermarket"
       parameters:
         - $ref: "#/components/parameters/supermarket_id"
@@ -687,9 +637,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Supermarket_categories'
+                $ref: '#/components/schemas/Supermarket_catalogs'
         "404":
           description: "Supermarket's or Category's id not found"
+  /supermarkets/{supermarket_id}/categories/{category_id}/products/{product_id}:
+    delete:
+      tags:
+        - "Supermarket Catalog Service"
+      summary: "Remove product from supermarket"
+      parameters:
+        - $ref: "#/components/parameters/supermarket_id"
+        - $ref: "#/components/parameters/product_id"
+        - $ref: "#/components/parameters/category_id"
+      responses:
+        "200":
+          description: "Successfully deleted product from supermarket"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supermarket_catalogs'
+        "404":
+          description: "Supermarket's, Category's or Product's id not found"
   /products/{product_id}/ratings:
     get:
       tags:
@@ -804,7 +772,7 @@ paths:
               schema:
                 type: "array"
                 items:
-                  $ref: '#/components/schemas/QRScan'
+                  $ref: '#/components/schemas/News'
   /news/{news_id}:
     get:
       tags:
